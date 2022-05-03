@@ -35,6 +35,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_shortcut", Command_Toggle);
 	RegConsoleCmd("sm_shortcuts", Command_Toggle);
 	RegConsoleCmd("sm_sc", Command_Toggle);
+	RegConsoleCmd("autobuy", Command_Info); //bind F3
 	RegAdminCmd("sm_reloadsc", Command_Reload, ADMFLAG_CONFIG);
 	
 	g_hQuickMenu = RegClientCookie("quickmenu_cookies", "Quick Menu Cookies", CookieAccess_Protected);
@@ -86,6 +87,12 @@ public Action Command_Toggle(int client, int args)
 		PrintToChat(client, " \x04[Shortcuts]\x01 You have \x07disabled \x10!shorcut \x01menu.");
 	}
 	SaveClientCookies(client);
+	return Plugin_Handled;
+}
+
+public Action Command_Info(int client, int args)
+{
+	ShowQuickMenu(client);
 	return Plugin_Handled;
 }
 
@@ -187,14 +194,14 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
 			{
 				ShowQuickMenu(client);
 			}
-			else
-			{
-				if(!ZR_IsClientZombie(client))
-					ShowQuickMenu(client);
+			// else
+			// {
+			// 	if(!ZR_IsClientZombie(client))
+			// 		ShowQuickMenu(client);
 				
-				else
-					return Plugin_Continue;
-			}
+			// 	else
+			// 		return Plugin_Continue;
+			// }
 		}
 		iLastButton[client] = buttons;
 		return Plugin_Continue;
